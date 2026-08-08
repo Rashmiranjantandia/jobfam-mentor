@@ -104,3 +104,42 @@ body {
 .navbar-brand strong {
   color: #fff;
 }
+
+// Smooth form-control transitions
+.form-control,
+.form-select {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+// Fix Slick carousel slide wrapper so card backgrounds render correctly
+.slick-slide > div {
+  display: flex;
+  height: 100%;
+}
+.slick-track {
+  display: flex !important;
+  align-items: stretch;
+}
+.slick-slide {
+  height: inherit !important;
+}
+
+// Slick dots colour — use brand navy
+.slick-dots li.slick-active button::before {
+  color: #12315C;
+}
+.slick-dots li button::before {
+  color: #12315C;
+  opacity: 0.35;
+}
+
+// Footer refinement
+footer, .site-footer {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.875rem;
+}
+
+// Subtle page separator between hero sections and card content
+.page-content-separator {
+  border-top: 1px solid rgba(18, 49, 92, 0.07);
+}
