@@ -1,0 +1,10 @@
+// Bootstrap SCSS variables are overridden HERE before importing Bootstrap
+// This avoids the need for !important overrides later (Phase 4 will expand this)
+$primary: #12315C;
+$link-color: #2F6FED;
+$font-family-sans-serif: 'Inter', 'Poppins', system-ui, sans-serif;
+$border-radius: 0.5rem;
+$body-bg: #F7F9FC;
+
+// Import all of Bootstrap (will be replaced with selective imports in Phase 4)
+@import 'bootstrap/scss/bootstrap';
