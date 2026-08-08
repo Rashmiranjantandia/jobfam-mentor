@@ -1,10 +1,106 @@
-// Bootstrap SCSS variables are overridden HERE before importing Bootstrap
-// This avoids the need for !important overrides later (Phase 4 will expand this)
-$primary: #12315C;
-$link-color: #2F6FED;
-$font-family-sans-serif: 'Inter', 'Poppins', system-ui, sans-serif;
-$border-radius: 0.5rem;
-$body-bg: #F7F9FC;
+// ── Google Fonts ─────────────────────────────────────────────────────────────
+// Imported via @import inside the SCSS (Vite handles this fine)
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
 
-// Import all of Bootstrap (will be replaced with selective imports in Phase 4)
+// ── Bootstrap variable overrides ──────────────────────────────────────────────
+// These MUST come before the Bootstrap import — Bootstrap uses !default on all
+// its variables, so anything set here wins without needing !important later.
+$primary:              #12315C;   // Jobfam navy
+$secondary:            #2F6FED;   // Accent blue
+$success:              #22C55E;
+$danger:               #EF4444;
+$warning:              #F59E0B;
+$light:                #F7F9FC;
+$dark:                 #0D1B2E;
+$body-bg:              #F7F9FC;
+$body-color:           #1E293B;
+$link-color:           #2F6FED;
+
+$font-family-sans-serif: 'Inter', 'Poppins', system-ui, -apple-system, sans-serif;
+$font-size-base:         1rem;
+$line-height-base:       1.6;
+$headings-font-family:   'Poppins', 'Inter', sans-serif;
+$headings-font-weight:   600;
+
+$border-radius:          0.5rem;
+$border-radius-lg:       0.75rem;
+$border-radius-pill:     50rem;
+
+$box-shadow:             0 2px 12px rgba(18, 49, 92, 0.08);
+$box-shadow-lg:          0 8px 32px rgba(18, 49, 92, 0.14);
+
+$btn-border-radius:      0.5rem;
+$btn-font-weight:        500;
+$btn-padding-y:          0.55rem;
+$btn-padding-x:          1.25rem;
+
+$input-border-radius:    0.5rem;
+$input-focus-box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.15);
+
+$card-border-radius:     0.75rem;
+$card-box-shadow:        0 2px 12px rgba(18, 49, 92, 0.08);
+$card-border-color:      rgba(18, 49, 92, 0.08);
+
+$navbar-padding-y:       1rem;
+$navbar-dark-color:      rgba(255,255,255,0.85);
+$navbar-dark-hover-color: #fff;
+$navbar-dark-active-color: #fff;
+
+// ── Bootstrap import ─────────────────────────────────────────────────────────
 @import 'bootstrap/scss/bootstrap';
+
+// ── Global custom styles ──────────────────────────────────────────────────────
+body {
+  font-family: $font-family-sans-serif;
+  background-color: $body-bg;
+  color: $body-color;
+}
+
+// Smooth focus ring for accessibility
+:focus-visible {
+  outline: 3px solid rgba(47, 111, 237, 0.5);
+  outline-offset: 2px;
+}
+
+// Card hover lift — used throughout mentor cards
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: $box-shadow-lg;
+  }
+}
+
+// Badge-style skill/expertise tags
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(47, 111, 237, 0.1);
+  color: $secondary;
+  border: 1px solid rgba(47, 111, 237, 0.25);
+  border-radius: $border-radius-pill;
+  padding: 0.2rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: background 0.15s;
+
+  &.removable {
+    cursor: pointer;
+    &:hover {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: $danger;
+    }
+  }
+}
+
+// Page section spacing
+.section {
+  padding: 2.5rem 0;
+}
+
+// Navbar brand strong text
+.navbar-brand strong {
+  color: #fff;
+}
