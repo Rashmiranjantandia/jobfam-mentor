@@ -5,6 +5,8 @@ const morgan = require('morgan');
 
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const mentorRoutes = require('./routes/mentorRoutes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -20,7 +22,9 @@ app.use(morgan('dev')); // HTTP request logger — useful during dev
 
 // ── Routes ─────────────────────────────────────────────────────────────────────
 app.use('/api/auth', authRoutes);
-// Further routes (users, mentors, bookings) will be added in Phases 2 & 3
+app.use('/api/users', userRoutes);
+app.use('/api/mentors', mentorRoutes);
+// Bookings routes will be added in Phase 3
 
 // Health check — quick sanity ping without hitting the DB
 app.get('/api/health', (req, res) => {
