@@ -423,3 +423,93 @@ npm run dev
 ```
 
 Open `http://localhost:5173` in your browser. Register a mentor, register a candidate, and walk through the full booking flow.
+
+---
+
+## 17. Deployment
+
+> **Status:** Deployment configuration is prepared for Vercel (frontend) and Render (backend). Actual deployment steps follow below.
+
+### Architecture
+
+| Layer | Platform | Notes |
+|-------|----------|-------|
+| **Frontend** | Vercel | Static/SSR deployment of the Vite React build |
+| **Backend** | Render Web Service | Node.js + Express; auto-restarts on push |
+| **Database** | MongoDB Atlas | Shared Atlas cluster; already connected |
+| **Email** | Ethereal (Nodemailer) | Auto-generated test account; preview URLs in Render logs |
+
+### Environment Variables
+
+Production environment variables are configured in each platform's dashboard — **never committed to GitHub**.
+
+#### Render (Backend) — required variables
+
+| Variable | Value |
+|----------|-------|
+| `MONGO_URI` | Your MongoDB Atlas connection string |
+| `JWT_SECRET` | A long random secret string |
+| `CLIENT_URL` | Your deployed Vercel frontend URL (e.g. `https://your-app.vercel.app`) |
+| `PORT` | Set automatically by Render — do not override |
+
+#### Vercel (Frontend) — required variables
+
+| Variable | Value |
+|----------|-------|
+| `VITE_API_URL` | Your Render backend URL + `/api` (e.g. `https://your-backend.onrender.com/api`) |
+
+### CORS
+
+The backend uses an environment-driven CORS allow-list. Set `CLIENT_URL` in Render to your Vercel URL so cross-origin requests from the frontend are accepted.
+
+### Deploy Steps
+
+**Backend (Render):**
+1. Create a new **Web Service** on [render.com](https://render.com)
+2. Connect the GitHub repository: `Rashmiranjantandia/jobfam-mentor`
+3. Set **Root Directory** to `jobfam-mentor-booking/backend`
+4. **Build command:** `npm install`
+5. **Start command:** `npm start`
+6. Add environment variables (`MONGO_URI`, `JWT_SECRET`, `CLIENT_URL`) in the Render dashboard
+
+**Frontend (Vercel):**
+1. Import the GitHub repository on [vercel.com](https://vercel.com)
+2. Set **Root Directory** to `jobfam-mentor-booking/frontend`
+3. **Framework preset:** Vite
+4. Add environment variable `VITE_API_URL` in the Vercel dashboard (pointing to the Render backend URL)
+5. Deploy
+
+---
+
+## 18. Optional Demo Seed Script
+
+An optional standalone seed script is provided for populating the deployed database with realistic demo data before a client walkthrough.
+
+**Location:** `backend/src/utils/seedDemoData.js`
+
+**Run manually (never automatically):**
+
+```bash
+cd backend
+node src/utils/seedDemoData.js
+```
+
+**What it creates:**
+- 5 demo mentors with realistic bios, expertise tags, and future open slots
+- 2 demo candidates ready to browse and book
+- Skips any user whose email already exists — safe to run multiple times
+
+**Demo credentials (printed to console after seed):**
+
+| Role | Email | Password |
+|------|-------|----------|
+| Mentor | `sarah.mitchell@demo.jobfam.example` | `DemoMentor2026!` |
+| Mentor | `vishal.mallik@demo.jobfam.example` | `DemoMentor2026!` |
+| Mentor | `nandini.sahoo@demo.jobfam.example` | `DemoMentor2026!` |
+| Mentor | `james.okeefe@demo.jobfam.example` | `DemoMentor2026!` |
+| Mentor | `priya.sharma@demo.jobfam.example` | `DemoMentor2026!` |
+| Candidate | `alex.chen@demo.jobfam.example` | `DemoCandidate2026!` |
+| Candidate | `aisha.patel@demo.jobfam.example` | `DemoCandidate2026!` |
+
+> These are fictional demo personas and are not real Jobfam employees.
+
